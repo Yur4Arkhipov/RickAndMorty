@@ -45,9 +45,10 @@ dependencies {
 
     implementation(project(":feature:home"))
     implementation(project(":core:network"))
+    implementation(project(":core:di"))
 
-    implementation("com.google.dagger:hilt-android:2.56.2")
-    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

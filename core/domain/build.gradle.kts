@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.rickandmorty.core.network"
+    namespace = "com.example.rickandmorty.core.domain"
     compileSdk = 35
 
     defaultConfig {
@@ -29,5 +29,8 @@ android {
 
 dependencies {
 
-    implementation(libs.retrofit)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
 }
