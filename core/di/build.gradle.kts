@@ -38,7 +38,13 @@ dependencies {
     implementation(project(":core:network"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
+    implementation(project(":core:database"))
 
+    implementation("androidx.room:room-runtime:2.7.2")
+    ksp("androidx.room:room-compiler:2.7.2")
+    implementation("androidx.room:room-ktx:2.7.2")
+//    implementation(libs.androidx.paging.runtime)
+//    implementation("androidx.room:room-paging:2.7.2")
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.retrofit)

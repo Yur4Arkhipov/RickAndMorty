@@ -33,7 +33,7 @@ fun Home(
     onCharacterClick: (Int) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val characters = viewModel.charactersPagingFlow.collectAsLazyPagingItems()
+    val characters = viewModel.characters.collectAsLazyPagingItems()
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),

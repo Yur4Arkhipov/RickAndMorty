@@ -1,11 +1,13 @@
 package com.example.rickandmorty.core.di
 
 import com.example.rickandmorty.core.data.usecase.GetCharacterByIdUseCaseImpl
+import com.example.rickandmorty.core.data.usecase.GetCharactersPagedUseCaseImpl
 import com.example.rickandmorty.core.data.usecase.GetCharactersUseCaseImpl
 import com.example.rickandmorty.core.data.usecase.GetPagedCharactersUseCaseImpl
 import com.example.rickandmorty.core.domain.repository.CharacterRepository
 import com.example.rickandmorty.core.domain.repository.CharactersRepository
 import com.example.rickandmorty.core.domain.usecase.GetCharacterByIdUseCase
+import com.example.rickandmorty.core.domain.usecase.GetCharactersPagedUseCase
 import com.example.rickandmorty.core.domain.usecase.GetCharactersUseCase
 import com.example.rickandmorty.core.domain.usecase.GetPagedCharactersUseCase
 import dagger.Module
@@ -36,5 +38,12 @@ class UseCaseModule {
         repository: CharacterRepository
     ): GetCharacterByIdUseCase {
         return GetCharacterByIdUseCaseImpl(repository)
+    }
+
+    @Provides
+    fun provideGetCharactersPagedUseCase(
+        repository: CharacterRepository
+    ): GetCharactersPagedUseCase {
+        return GetCharactersPagedUseCaseImpl(repository)
     }
 }
