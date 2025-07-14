@@ -24,4 +24,17 @@ interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(character: CharacterEntity)
 
+    @Query("""
+        SELECT * FROM characters
+        WHERE (:name IS NULL OR name LIKE '%' || :name || '%')
+          AND (:status IS NULL OR status = :status)
+          AND (:gender IS NULL OR gender = :gender)
+        ORDER BY name ASC
+    """)
+    fun getFilteredCharacters(
+        name: String?,
+        status: String?,
+        gender: String?
+    ): PagingSource<Int, CharacterEntity>
+
 }

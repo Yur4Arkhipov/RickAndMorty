@@ -57,4 +57,20 @@ class CharacterRepositoryImpl @Inject constructor(
         }
     }
 
+    @OptIn(ExperimentalPagingApi::class)
+    override fun getCharactersPaging(
+        name: String?,
+        status: String?,
+        gender: String?
+    ): Flow<PagingData<Character>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            remoteMediator = CharacterRemoteMediator(api, dao),
+            pagingSourceFactory = {
+                dao.getFilteredCharacters(name, status, gender)
+            }
+        ).flow.map { pagingData ->
+            pagingData.map { it.toDomain() }
+        }
+    }
 }
