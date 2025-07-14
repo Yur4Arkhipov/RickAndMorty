@@ -15,8 +15,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -27,43 +29,57 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.rickandmorty.core.domain.model.Character
 import coil3.compose.AsyncImage
+import androidx.compose.runtime.getValue
+
 
 @Composable
 fun Home(
     onCharacterClick: (Int) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
+    val searchQuery by viewModel.searchQuery.collectAsState()
     val characters = viewModel.characters.collectAsLazyPagingItems()
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(8.dp)
-    ) {
-        items(characters.itemCount) { index ->
-            characters[index]?.let { character ->
-                CharacterCard(
-                    character = character,
-                    onClick = { onCharacterClick(character.id) }
-                )
+    Column {
+        OutlinedTextField(
+            value = searchQuery,
+            onValueChange = { viewModel.setSearchQuery(it) },
+            label = { Text("Search characters") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            singleLine = true
+        )
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(8.dp)
+        ) {
+            items(characters.itemCount) { index ->
+                characters[index]?.let { character ->
+                    CharacterCard(
+                        character = character,
+                        onClick = { onCharacterClick(character.id) }
+                    )
+                }
             }
-        }
 
-        characters.apply {
-            when {
-                loadState.refresh is LoadState.Loading -> {
-                    item { CircularProgressIndicator(modifier = Modifier.padding(16.dp)) }
-                }
-                loadState.append is LoadState.Loading -> {
-                    item { CircularProgressIndicator(modifier = Modifier.padding(16.dp)) }
-                }
-                loadState.refresh is LoadState.Error -> {
-                    val error = loadState.refresh as LoadState.Error
-                    item {
-                        Text(
-                            text = "Error: ${error.error.localizedMessage}",
-                            color = Color.Red,
-                            modifier = Modifier.padding(16.dp)
-                        )
+            characters.apply {
+                when {
+                    loadState.refresh is LoadState.Loading -> {
+                        item { CircularProgressIndicator(modifier = Modifier.padding(16.dp)) }
+                    }
+                    loadState.append is LoadState.Loading -> {
+                        item { CircularProgressIndicator(modifier = Modifier.padding(16.dp)) }
+                    }
+                    loadState.refresh is LoadState.Error -> {
+                        val error = loadState.refresh as LoadState.Error
+                        item {
+                            Text(
+                                text = "Error: ${error.error.localizedMessage}",
+                                color = Color.Red,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
                     }
                 }
             }
