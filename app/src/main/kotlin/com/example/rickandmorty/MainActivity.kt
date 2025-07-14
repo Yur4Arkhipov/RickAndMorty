@@ -4,13 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
 import com.example.rickandmorty.core.network.service.RickAndMortyApiService
-import com.example.rickandmorty.feature.home.Home
 import dagger.hilt.android.AndroidEntryPoint
 import jakarta.inject.Inject
 import kotlinx.coroutines.launch
@@ -49,12 +45,4 @@ class MainActivity : ComponentActivity() {
 //            Hello()
 //        }
 //    }
-}
-
-@Composable
-fun Hello() {
-    Column {
-        Text("Hello from app module")
-        Home()
-    }
 }
