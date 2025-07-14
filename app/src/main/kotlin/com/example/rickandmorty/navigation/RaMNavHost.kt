@@ -39,7 +39,7 @@ fun RaMNavHost(
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) { backStackEntry ->
             val id = backStackEntry.arguments?.getInt("id") ?: return@composable
-            Details(characterId = id)
+            Details(characterId = id, navController = navController)
         }
 
     }
