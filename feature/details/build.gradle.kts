@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.rickandmorty.feature.home"
+    namespace = "com.example.rickandmorty.feature.details"
     compileSdk = 35
 
     defaultConfig {
@@ -33,7 +33,6 @@ android {
 dependencies {
 
     implementation(project(":core:domain"))
-//    implementation(project(":feature:details"))
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)

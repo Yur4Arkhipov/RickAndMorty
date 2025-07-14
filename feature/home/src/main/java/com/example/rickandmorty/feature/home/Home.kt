@@ -1,5 +1,6 @@
 package com.example.rickandmorty.feature.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -28,7 +29,10 @@ import com.example.rickandmorty.core.domain.model.Character
 import coil3.compose.AsyncImage
 
 @Composable
-fun Home(viewModel: HomeViewModel = hiltViewModel()) {
+fun Home(
+    onCharacterClick: (Int) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
     val characters = viewModel.charactersPagingFlow.collectAsLazyPagingItems()
 
     LazyColumn(
@@ -37,7 +41,10 @@ fun Home(viewModel: HomeViewModel = hiltViewModel()) {
     ) {
         items(characters.itemCount) { index ->
             characters[index]?.let { character ->
-                CharacterCard(character)
+                CharacterCard(
+                    character = character,
+                    onClick = { onCharacterClick(character.id) }
+                )
             }
         }
 
@@ -65,11 +72,15 @@ fun Home(viewModel: HomeViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun CharacterCard(character: Character) {
+fun CharacterCard(
+    character: Character,
+    onClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
+            .padding(vertical = 4.dp)
+            .clickable { onClick() },
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {

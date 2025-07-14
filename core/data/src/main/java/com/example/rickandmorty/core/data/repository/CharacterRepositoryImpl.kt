@@ -3,6 +3,7 @@ package com.example.rickandmorty.core.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.example.rickandmorty.core.data.mapper.toDomain
 import com.example.rickandmorty.core.data.paging.CharacterPagingSource
 import com.example.rickandmorty.core.domain.model.Character
 import com.example.rickandmorty.core.domain.repository.CharacterRepository
@@ -22,5 +23,9 @@ class CharacterRepositoryImpl @Inject constructor(
             ),
             pagingSourceFactory = { CharacterPagingSource(api) }
         ).flow
+    }
+
+    override suspend fun getCharacterById(id: Int): Character {
+        return api.getCharacterById(id).toDomain()
     }
 }

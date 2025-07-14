@@ -30,3 +30,4 @@ include(":core:network")
 include(":core:domain")
 
 include(":feature:home")
+include(":feature:details")

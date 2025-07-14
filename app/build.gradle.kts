@@ -44,11 +44,13 @@ android {
 dependencies {
 
     implementation(project(":feature:home"))
+    implementation(project(":feature:details"))
     implementation(project(":core:network"))
     implementation(project(":core:di"))
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.navigation.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
